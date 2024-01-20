@@ -2,11 +2,10 @@ library(MASS)
 library(AER)
 library(performance)
 #################################################### load dataset ###########################################################
-data = ToPawanthi_Master_data_set_new
+data = ToPawanthi_Master_data_set_new_new
 head(data)
 colnames(data)
 sum(is.na(data))
-summary(data)
 
 ############################################ Create the variable Transect & Elevation########################################
 data$Extracted_Transect_Elevation=substr(data$`Transect_&_Elevation`,6,11)
@@ -18,6 +17,17 @@ mode(data$Transect_Elevation)
 data$Habitat_type = factor(data$Habitat_type)
 summary(data)
 
+###################################### Standardize data###########################################
+data_subset = data[,c("Average_Humidity", "Average_Light_intensity", "Average_Temperature", 
+                      "Average_Wind_speed", "Average_Cloud_cover", "Cloudline", "Transect_Elevation")] 
+
+data_standardized =  data_subset %>%
+  mutate_if(is.numeric, scale)
+
+add_var = data.frame(Habitat_type = data$Habitat_type, Species_richness = data$Species_richness, Abundance = data$Abundance)
+
+data = cbind( data_standardized,   add_var)
+head(data)
 ############################################### check mean & variance #########################################################
 # Abundance
 hist(data$Abundance)
@@ -101,8 +111,7 @@ SR_both = stepAIC(null, scope = list(lower=null, upper=full), data=data, directi
 
 
 # Final MODEL BUILDING
-nb_sr = glm.nb(formula = Species_richness ~ Average_Humidity + Transect_Elevation + Average_Light_intensity + 
-                 Average_Wind_speed, data = data, link = log)
+nb_sr = glm.nb(formula = Species_richness ~ Average_Humidity + Transect_Elevation + Average_Wind_speed, data = data, link = log)
 summary(nb_sr)
 
 
@@ -332,6 +341,6 @@ SR_both = stepAIC(null, scope = list(lower=null, upper=full), data=data, directi
 
 
 # Final MODEL BUILDING
-nb_sr = glm.nb(formula = Species_richness ~ Average_Humidity + Transect_Elevation + Average_Light_intensity + 
-                 Average_Wind_speed, data = data, link = log)
+nb_sr = glm.nb(formula = Species_richness ~ Cloudline + Transect_Elevation + Average_Light_intensity + 
+                 Average_Humidity, data = data, link = log)
 summary(nb_sr)
