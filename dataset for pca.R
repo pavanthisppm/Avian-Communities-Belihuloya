@@ -8,16 +8,20 @@ colnames(data[1,1:7])
 
 df2 = data[,colnames(data[1,8:103])]
 dim(df2)
- 
+
+colnames(df2)
+
 df2$ID <- 1:189
- 
+
 df2 <- df2[c("ID", names(df2)[-which(names(df2) == "ID")])]
- 
+
 tail(df2)
 summary(df2)
 
 df2$Species <- apply(df2[, -c(1, ncol(df2))], 1, function(x) names(x[!is.na(x)]))
 df = cbind(df1,df2)
+
+dim(df2[, -c(1, ncol(df2))])
 
 df3 = PCA
 data <- df3 %>%
@@ -26,8 +30,10 @@ data <- df3 %>%
 result <- data %>%
   slice(rep(row_number(), each = 1))
 
+cleaned_data <- na.omit(result)
 
-write.xlsx(result,"PCA-New.xlsx", rowNames = FALSE)
+dim(cleaned_data)
+write.xlsx(cleaned_data,"PCA-New.xlsx", rowNames = FALSE)
 
 # 
 # # Assuming 'your_data' is your dataframe
