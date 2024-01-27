@@ -1,9 +1,10 @@
+library(dplyr)
 data = PCA_New_abr
 sum(is.na(data))
 colnames(data)
 
 colnames(data)
-data_subset = data[,c("Transect_Elevation", "Average_Humidity", "Average_Light_intensity", "Average_Temperature", "Average_Wind_speed" )] 
+data_subset = data[,c("Transect_Elevation", "Average_Humidity", "Average_Light_intensity", "Average_Temperature", "Average_Wind_speed" )]
 
 add_var = data.frame( Species = data$Species, Habitat_type = data$Habitat_type)
 
@@ -13,10 +14,10 @@ colnames(data)
 
 dim(data)
 
-calcmode <- function(a) {  
-  vector <- unique(a)  
-  vector[which.max(tabulate(match(a, vector)))]  
-} 
+calcmode <- function(a) {
+  vector <- unique(a)
+  vector[which.max(tabulate(match(a, vector)))]
+}
 
 
 result <- data %>%
@@ -40,16 +41,16 @@ dim(data)
 head(data)
 
 
-pca_result <- prcomp(data[,c("Transect_Elevation", "Average_Humidity", "Average_Light_intensity", "Average_Temperature", "Average_Wind_speed" )] , scale. = TRUE)
+# pca_result <- prcomp(data[,c("Transect_Elevation", "Average_Humidity", "Average_Light_intensity", "Average_Temperature", "Average_Wind_speed" )] , scale. = TRUE)
 
-pca_scores <- as.data.frame(pca_result$x[, 1:2])
-png("PCA-Scatter-Plot.png", height = 1000, width = 1400)
-
-plot(jitter(pca_scores$PC1), jitter(pca_scores$PC2), main = "PCA Plot", xlab = "PCA1", ylab = "PCA2", pch = 16, col = "black", cex = 1.5)
-
-text(pca_scores$PC1, pca_scores$PC2, labels = data$Species, pos = 3)
-
-dev.off()
+pca_scores <- as.data.frame(pca_result$x[, 1:3])
+# png("PCA-Scatter-Plot.png", height = 1000, width = 1400)
+# 
+# plot(jitter(pca_scores$PC1), jitter(pca_scores$PC2), main = "PCA Plot", xlab = "PCA1", ylab = "PCA2", pch = 16, col = "black", cex = 1.5)
+# 
+# text(pca_scores$PC1, pca_scores$PC2, labels = data$Species, pos = 3)
+# 
+# dev.off()
 
 
 
@@ -64,3 +65,9 @@ ggplot(data = pca_scores, aes(x = PC1, y = PC2, label = data$Species)) +
   labs(title = "", x = "PC1", y = "PC2") +
   theme_minimal()
 dev.off()
+
+plot3d(pca_scores[,1], pca_scores[,2], pca_scores[,3], type="s", size=1, lit=TRUE, main = "")
+
+# Add data labels using text3d
+text3d(pc_scores[, 1], pc_scores[, 2], pc_scores[, 3], texts = rownames(pc_scores), cex = 0.7, adj = c(-0.5,0), col="black")
+
