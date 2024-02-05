@@ -30,8 +30,8 @@ result <- data %>%
     Average_Wind_speed = mean(Average_Wind_speed)
   )
 
-# result$Habitat_type = as.numeric(result$Habitat_type)*2
-# result$Transect_Elevation = result$Transect_Elevation*3
+result$Habitat_type = as.numeric(result$Habitat_type)*2
+result$Transect_Elevation = result$Transect_Elevation*3
 
  
 data = result
@@ -44,7 +44,9 @@ head(data)
 hc <- hclust(dist(data[-1]), method='average')
 png("dendrogram.png", height = 700, width = 1400)
 par(mar=c(1,5,5,1))
-plot(hc,main = "", labels=data$Species,cex=1, xlab="", ylab="")
+plot(hc,main = "", labels=data$Species,cex=1, xlab="", ylab="", hang = -1)
+rect.hclust(hc , k = 22,  which = c(3,4,7,10,11,13,15,16,18,19))
+ 
 dev.off()
 # # Convert to dendrogram
 # dend <- as.dendrogram(hc)
