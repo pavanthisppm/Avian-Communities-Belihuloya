@@ -1,4 +1,4 @@
-data = ToPawanthi_Master_data_set_new_1_
+data = ToPawanthi_Master_data_set_new_3_
 table(data)
 data1 = as.data.frame(table(data))
 data1
@@ -16,7 +16,7 @@ png("Cloudline-Month.png", height = 500, width = 700)
 
 ggplot(data, aes(x = Sampling_Session, y = Cloudline, size = Freq)) +
   geom_point()+ 
-  geom_text(aes(label = Cloudline), size = 4, vjust = 2.2) +
+  geom_text(aes(label = paste(Cloudline,"(",Freq,")")), size = 4, vjust = 2.2) +
   scale_size(name = "Size", range = c(5, 12)) +
   theme(legend.position = "none")+
   labs(x = "Month", y = "Elevation of the cloudline", title = " ") +
