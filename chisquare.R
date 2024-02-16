@@ -65,7 +65,16 @@ data1 = ToPawanthi_Master_data_set_new_2_
 data1
 
 # Low_land
-col_no = which(colnames(data1) %in% Low_land)
+col_no_low = which(colnames(data1) %in% Low_land)
+col_no_mid = which(colnames(data1) %in% Mid_land)
+col_no_high = which(colnames(data1) %in% High_land)
+
+
+# a = c(1,1,2,3,4,4,5,5,6)
+# b = c(2,2,3,4,4,5)
+# duplicated(a,b)
+# 
+# unique(a[which(a %in% b)])
 
 a = c()
 for (i in col_no){
@@ -161,3 +170,62 @@ print(chi_square_result)
 # fisher test
 fisher.test(data_matrix)
 
+
+
+
+# create the variable transect
+
+# 480-700
+transect = c(NA)
+
+for (i in 1:length(data1$Sampling_Session)){
+  if (480<=data1$`Transect_&_Elevation`[i] & data1$`Transect_&_Elevation`[i]<=700){
+    data1$transect[i] = "Low"
+  }
+}
+
+
+# 780-1000
+
+for (i in 1:length(data1$Sampling_Session)){
+  if (780<=data1$`Transect_&_Elevation`[i] & data1$`Transect_&_Elevation`[i]<=1000){
+    data1$transect[i] = "Mid"
+  }
+}
+
+# 1100 - 1420
+
+for (i in 1:length(data1$Sampling_Session)){
+  if (1100<=data1$`Transect_&_Elevation`[i] & data1$`Transect_&_Elevation`[i]<=1420){
+    data1$transect[i] = "High"
+  }
+}
+
+data1$transect[30]
+data1$`Transect_&_Elevation`[30]
+
+
+
+
+
+which(!(is.na(data1$Spurfowl)))
+d1_col_names = colnames(data1)[15:110]
+
+data2 = data1[15:111]
+ 
+ 
+getmode <- function(v) {
+  uniqv <- unique(v)
+  uniqv[which.max(tabulate(match(v, uniqv)))]
+}
+ 
+for (i in 1:96){
+    cat(d1_col_names[i] ,  table(data2$transect[which(!(is.na(data2[i])))]), "\n")
+}
+
+for (i in 1:96){
+ 
+   print(table(data2$transect[which(!(is.na(data2[i])))]) )
+}
+
+ 
