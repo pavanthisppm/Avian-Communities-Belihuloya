@@ -34,6 +34,9 @@ result <- data %>%
 result$Habitat_type = as.numeric(result$Habitat_type)*2
 result$Transect_Elevation = result$Transect_Elevation*3
 
+# result$Habitat_type = as.numeric(result$Habitat_type)
+# result$Transect_Elevation = result$Transect_Elevation
+
 
 data = result
 colnames(data)
@@ -44,6 +47,7 @@ head(data)
 pca_result <- prcomp(data[,c("Transect_Elevation", "Average_Humidity", "Average_Light_intensity", "Average_Temperature", "Average_Wind_speed" )] , scale. = TRUE)
 
 pca_scores <- as.data.frame(pca_result$x[, 1:3])
+summary(pca_result)
 # png("PCA-Scatter-Plot.png", height = 1000, width = 1400)
 # 
 # plot(jitter(pca_scores$PC1), jitter(pca_scores$PC2), main = "PCA Plot", xlab = "PCA1", ylab = "PCA2", pch = 16, col = "black", cex = 1.5)
@@ -59,7 +63,7 @@ library(ggplot2)
 library(ggrepel)
 
 # PC1-PC2
-png("PC1-PC2.png", height = 700, width = 900)
+png("PC1-PC2-without-multiplying.png", height = 700, width = 900)
 # Create the ggplot with labeled points (using ggrepel for label repelling)
 ggplot(data = pca_scores, aes(x = PC1, y = PC2, label = data$Species)) +
   geom_point(size = 4, color = "black") +
@@ -69,7 +73,7 @@ ggplot(data = pca_scores, aes(x = PC1, y = PC2, label = data$Species)) +
 dev.off()
 
 # PC1-PC3
-png("PC1-PC3.png", height = 700, width = 900)
+png("PC1-PC3--without-multiplying.png", height = 700, width = 900)
 # Create the ggplot with labeled points (using ggrepel for label repelling)
 ggplot(data = pca_scores, aes(x = PC1, y = PC3, label = data$Species)) +
   geom_point(size = 4, color = "black") +
@@ -79,7 +83,7 @@ ggplot(data = pca_scores, aes(x = PC1, y = PC3, label = data$Species)) +
 dev.off()
 
 # PC2-PC3
-png("PC2-PC3.png", height = 700, width = 900)
+png("PC2-PC3-without-multiplying.png", height = 700, width = 900)
 # Create the ggplot with labeled points (using ggrepel for label repelling)
 ggplot(data = pca_scores, aes(x = PC2, y = PC3, label = data$Species)) +
   geom_point(size = 4, color = "black") +
