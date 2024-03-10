@@ -21,14 +21,14 @@ ggplot(data, aes(x = Sampling_Session, y = Cloudline, size = Freq, group = 1)) +
   scale_size(name = "Size", range = c(5, 12)) +
   theme(legend.position = "none")+
   labs(x = "Month", y = "Elevation of the cloudline", title = " ") +
-  geom_line( aes(y = rain/0.02),   color = "blue", size=0.1) +
-  geom_text(aes(y = rain/0.02, label= rain),   hjust = -0.5, vjust = 1,  size= 3, color= "blue") +
-  scale_x_discrete(breaks = 1:6, labels = c("Nov", "Dec", "Jan", "Feb", "Mar", "Apr"))+
-  scale_y_continuous(name = "Cloudline Elevation", limits = c(0, 2000), breaks = seq(0, 2000, by = 500), sec.axis = sec_axis( trans=~.*0.02, name="Rainfall"))
+  geom_line( aes(y = rain/0.035),   color = "blue", size=0.1) +
+  geom_text(aes(y = rain/0.035, label= rain),   hjust = -0.5, vjust = 0.5,  size= 3, color= "blue") +
+  scale_x_discrete(breaks = 1:8, labels = c("Sep","Oct","Nov", "Dec", "Jan", "Feb", "Mar", "Apr"))+
+  scale_y_continuous(name = "Cloudline Elevation", limits = c(0, 2000), breaks = seq(0, 2000, by = 500), sec.axis = sec_axis( trans=~.*0.035, name="Rainfall"))
   
 
 dev.off()
-
+getwd()
 class(data$rain)
 data$rain
 
