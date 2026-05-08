@@ -48,13 +48,7 @@ pca_result <- prcomp(data[,c("Transect_Elevation", "Average_Humidity", "Average_
 
 pca_scores <- as.data.frame(pca_result$x[, 1:3])
 summary(pca_result)
-# png("PCA-Scatter-Plot.png", height = 1000, width = 1400)
-# 
-# plot(jitter(pca_scores$PC1), jitter(pca_scores$PC2), main = "PCA Plot", xlab = "PCA1", ylab = "PCA2", pch = 16, col = "black", cex = 1.5)
-# 
-# text(pca_scores$PC1, pca_scores$PC2, labels = data$Species, pos = 3)
-# 
-# dev.off()
+ 
 
 
 
@@ -64,40 +58,32 @@ library(ggrepel)
 
 # PC1-PC2
 png("PC1-PC2-without-multiplying.png", height = 700, width = 900)
-# Create the ggplot with labeled points (using ggrepel for label repelling)
+ 
 ggplot(data = pca_scores, aes(x = PC1, y = PC2, label = data$Species)) +
   geom_point(size = 4, color = "black") +
-  geom_text_repel(size = 4, box.padding = 0.5, max.overlaps = 50) +  # Use geom_text_repel for label repelling
+  geom_text_repel(size = 4, box.padding = 0.5, max.overlaps = 50) +  
   labs(title = "PC1 vs PC2", x = "PC1", y = "PC2") +
   theme_minimal()
 dev.off()
 
 # PC1-PC3
-png("PC1-PC3--without-multiplying.png", height = 700, width = 900)
-# Create the ggplot with labeled points (using ggrepel for label repelling)
+png("PC1-PC3--without-multiplying.png", height = 700, width = 900) 
 ggplot(data = pca_scores, aes(x = PC1, y = PC3, label = data$Species)) +
   geom_point(size = 4, color = "black") +
-  geom_text_repel(size = 4, box.padding = 0.5, max.overlaps = 50) +  # Use geom_text_repel for label repelling
+  geom_text_repel(size = 4, box.padding = 0.5, max.overlaps = 50) +   
   labs(title = "PC1 vs PC3", x = "PC1", y = "PC3") +
   theme_minimal()
 dev.off()
 
 # PC2-PC3
-png("PC2-PC3-without-multiplying.png", height = 700, width = 900)
-# Create the ggplot with labeled points (using ggrepel for label repelling)
+png("PC2-PC3-without-multiplying.png", height = 700, width = 900) 
 ggplot(data = pca_scores, aes(x = PC2, y = PC3, label = data$Species)) +
   geom_point(size = 4, color = "black") +
-  geom_text_repel(size = 4, box.padding = 0.5, max.overlaps = 50) +  # Use geom_text_repel for label repelling
+  geom_text_repel(size = 4, box.padding = 0.5, max.overlaps = 50) +  
   labs(title = "PC2 vs PC3", x = "PC2", y = "PC3") +
   theme_minimal()
 dev.off()
 
 
 
-
-
-# plot3d(pca_scores[,1], pca_scores[,2], pca_scores[,3], type="s", size=1, lit=TRUE, main = "")
-# 
-# # Add data labels using text3d
-# text3d(pc_scores[, 1], pc_scores[, 2], pc_scores[, 3], texts = rownames(pc_scores), cex = 0.7, adj = c(-0.5,0), col="black")
-# 
+ 
